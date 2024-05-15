@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Acme widgets</title>
+    <style>
+      .imageFramer {
+        border: 0px solid chartreuse; display: flex; justify-content: space-around; 
+        height: 100%;
+      }
+      .custom-slick-arrow {
+        width: 50px;
+        height: 50px;
+        color: var(--tsc);
+        transition: ease all 0.3s;
+        opacity: 1;
+        z-index: 10;
+      }
+      .custom-slick-arrow:before {
+        display: none;
+      }
+      .custom-slick-arrow:hover {
+        color: orange;
+        opacity: 0.5;
+      }
+      .slick-slide {
+        text-align: center;
+        background-color: #364d79;
+        border: 0px solid greenyellow;
+        overflow: hidden;
+      }
+      .siteAligner {
+        position: relative;
+        width: 100%; height: 500px; 
+        border: 0px solid pink;
+        display: flex; align-items: cetopnter;
+        justify-content: space-around 
+        }
+      .CarouselX {
+        width: 300px;
+        border: 0px dotted cyan; 
+        box-sizing: border-box;
+        overflow: hidden; margin: 16px 4px 0px 4px !important; border-radius: 6px; 
+        }
+      .carouseledImg {
+        height: 260px;
+        border-radius: 4px;
+        border-color: white;
+        }
+
+      .proxySite {
+        flex: 0 0 300px ;
+        height: 450px;
+        margin: 32px 0 32px 0;
+        border-radius: 6px;
+        display: flex; flex-direction: column; align-items: center;
+        ;padding: 8px; 
+        border-width: 2px;
+        border-color: rgb(183, 177, 177);
+        border-style: solid;
+        font-size: 20px;
+        position: relative;
+        box-shadow: 6px 6px 13px 2px var(--ltsc);
+        font-family: "Permanent Marker";
+        background-color: rgba(42, 38, 33, 0.54);
+        }
+      .prose {
+        width: 100%; margin-top: 16px; padding: 8px; color: var(--quasiblack)
+        }
+
+      .proxySiteLogo {
+        color: lightgrey;
+        width: 100%;
+        margin: 0px 0 16px 0; border: 0px solid brown;
+        text-align: start;
+        font-size: 14px
+        }
+      .proxySitePrompt {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex: 1;
+        color: var(--tsc);
+        transition: ease all 0.3s;
+        padding: 4px 0 32px 0;
+        font-size: 30px
+
+      }
+
+      .proxySiteButton {
+        font-size: 50px;
+        font-family: "Permanent Marker";
+        }
+      .flippedL {
+        transform: rotateZ(45deg) rotateZ(30deg);
+        position: absolute; 
+        left: 16px; bottom: -8px
+        }
+      .flippedR {
+        transform: rotateZ(45deg) rotateZ(50deg) rotateX(180deg) translateX(-6px);
+        position: absolute; 
+        right: 16px; bottom: -12px
+        }
+
+      .W104 {
+          min-width: calc(100% - 16px) !important;
+          width: calc(100% - 8px) !important
+        }
+
+      </style>
+    </head>
+  <body>
+    <div class="proxySite">
+      <div class="proxySiteLogo">
+        Example page
+        </div>
+      <div @mousedown="e => carous.prev()" class="custom-slick-arrow flippedL">
+          <span class="proxySiteButton" >V</span>
+        </div>
+        <div @mousedown="e => carous.next()" class="custom-slick-arrow flippedR" >
+            <span class="proxySiteButton" >V</span>
+          </div>
+      <div class="narrator" ref="narrator">{{  activeNarrative }}</div>
+      <span :beforeChange="wipePaint" :afterChange="updateLegend" />
+      <div class="main-carousel CarouselX" >
+        <div class="carousel-cell">
+          <h3 class="imageFramer"> <img src="https://sp.apolloboxassets.com/vendor/product/productImages/2021-12-09/qHhnnArray_11.jpg" class="carouseledImg"> </h3></div>
+        <div class="carousel-cell">
+          <h3 class="imageFramer"><img src="https://cdn.shopify.com/s/files/1/0937/1176/products/Super3_Gunmetal_Hand_800x800_800x800_bb506f6e-49f2-48c4-9c22-d2c4fa413af5.jpg?v=1640890554" class="carouseledImg"></h3></div>
+        <div class="carousel-cell">
+          <h3 class="imageFramer"><img src="https://www.mapplethorpe.org/custom/media/cache/resolve/enlarge/5f8de35a13a8375f7b8b4567/e4a578cba9bd07cf8bc2762e9998a487.jpeg" class="carouseledImg"></h3></div>
+        <div class="carousel-cell">
+          <h3 class="imageFramer"><img src="https://www.jiomart.com/images/product/original/rvnewnfqs5/lapo-door-locks-for-main-door-lock-handle-set-with-3-brass-key-matt-finish-ro-178-product-images-orvnewnfqs5-p599971120-0-202303291836.jpg?im=Resize=(420,420)" class="carouseledImg"></h3></div>
+        </div>
+      <div class="proxySitePrompt"> <span  v-html="activeProxyLegend" /> </div>
+
+          </div>
+          <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+</body>
