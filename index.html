@@ -17,6 +17,7 @@
       .deviceFrame {
         width: 337px;
         height: 675;
+        border-radius: 4px;
         border: 1px solid lightgrey;
         display: flex; flex-direction: column; align-items: center;
         }
@@ -29,19 +30,21 @@
         height: 280px;
         width: 300px;
         border-radius: 4px;
-        border-color: rgba(42, 38, 33, .8);
         }
       .demoSiteHeadline {
         color: lightgrey;
         width: 100%;
-        margin: 0px 0 16px 0;
-        text-align: center;
-        font-size: 50px
+        margin: 16px 0 16px 16px;
+        text-align: start;
+        font-size: 20px
         }
       .demoSiteLegend {
         width: 100%; font-size: 30px;
         display: flex; align-items: center; justify-content: space-around;
-        padding-top: 32px;
+        padding: 16px;
+        margin: 16px;
+        overflow: visible;
+        color: #4b4bc4;
         }
       .demoSitePrompt {
         width: 100%;
@@ -58,7 +61,7 @@
     </head>
   <body>
     <div class="deviceFrame">
-      <div class="demoSiteHeadline"> Demo site </div>
+      <div class="demoSiteHeadline"> Your page with images </div>
       <div class="carousel"> <!-- These pictures are arbitrary-->
         <img class="carousel-cell "src="https://sp.apolloboxassets.com/vendor/product/productImages/2021-12-09/qHhnnArray_11.jpg" >
         <img class="carousel-cell "src="https://cdn.shopify.com/s/files/1/0937/1176/products/Super3_Gunmetal_Hand_800x800_800x800_bb506f6e-49f2-48c4-9c22-d2c4fa413af5.jpg?v=1640890554" >
@@ -76,8 +79,8 @@
         const flkty = new Flickity( '.carousel', {wrapAround: true})
         flkty.on( 'scroll', cleanit )
         flkty.on( 'settle', i => updateLegend() )
-        function cleanit () { if (legend != ' ') { updateLegend (' '); cleanup() } }
-        const legends = ['ATap to Buy', 'Get lucky', 'Go to the museum', 'Call an API']
+        function cleanit () { if (legend != '...') { updateLegend ('...'); cleanup() } }
+        const legends = ['Tap to Buy', 'Get lucky', 'Go to the museum', 'Call an API']
         const legendEl = document.getElementsByClassName ('demoSiteLegend')[0]
         let legend = legends[0]
         function updateLegend (forced) {
@@ -89,7 +92,7 @@
 
          // Connect a SpacyLens (domain "sandbox3") where img shown here have been enabled:
          // replace with your own domain Id to start and change behaviors with your SpacyLens
-         equipImages('sanbox3')
+         equipImages('sandbox3')
         
         </script>
 

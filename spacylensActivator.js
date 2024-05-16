@@ -1,4 +1,4 @@
-const base = () => {console.warn ("ACTHIUNG"); return `http://127.0.0.1:5001/spacybuy/us-central1/`}
+const base = () => {console.warn ("ACTHUNG"); return `http://127.0.0.1:5001/spacybuy/us-central1/`}
 const base1 = `https://us-central1-spacybuy.cloudfunctions.net/`
 const sceneAPIUrl = base()+"spacyLensScene"
 const fetchitAPIUrl = base()+`spacyLensFetchit`
@@ -58,17 +58,22 @@ let inlineCSS = `
         background-color: white; /*rgba(255, 255, 255, 0.5)*/
         color: orange
         } `
-let dialog // set at mount time by vue
+let dialog
 let delay1 = 1000
 let delay2 = 5000
+let onPicTap
 
-export function equipImages (domainId) {
-    const images = document.images;
-    for (let i = 0; i < images.length; i++)
-        images[i].addEventListener ('mousedown', e => onPicMouseDown (e, domainId))
-    // warm up both
-    getScene ('warmup', domainId)//.then (s => console.log ("OK: " + s.title))
-    fetchit ('warmup')//.then (r => console.log ("OK: " + r))
+// warm up both backends, speeds i sthe name of the game.
+getScene ('warmup', 'bingu').then (s => console.log ("OK: " + s.title))
+fetchit ('warmup').then (r => console.log ("OK: " + r))
+
+export function equipImages (id) {
+    onPicTap = e => getSceneThenReact (e, id)
+    const images = document.getElementsByTagName ('img');
+    for (let i = 0; i < images.length; i++) {
+        const img = images[i]
+        img.addEventListener ('click', onPicTap, true)
+        }
     }
 
 export function cleanup () {
@@ -108,11 +113,15 @@ const magicSlides = (() => { // Maximum 10 slides at a time.
     return result
     })()
 
-function onPicMouseDown (event, domainId) {
+function getSceneThenReact (event, domainId) {
+    console.log ("WOWOWOW " + domainId)
+    console.log (event)
     const image = event.target
     getScene (image.src, domainId)
         .then (scene => {
             activeScene = scene
+    console.log ("OOOOHHHH")
+    console.log (scene)
             if (scene.id) { // otherwise nothing happens
                 placeMagicSlides (scene.frames, image) // in case scrolling happened, or image resized, etc...
                 picTap (event, scene.frames)
