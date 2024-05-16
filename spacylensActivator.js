@@ -1,7 +1,7 @@
-const base = () => {console.warn ("ACTHUNG"); return `http://127.0.0.1:5001/spacybuy/us-central1/`}
+//const base = () => {console.warn ("ACTHUNG"); return `http://127.0.0.1:5001/spacybuy/us-central1/`}
 const base1 = `https://us-central1-spacybuy.cloudfunctions.net/`
-const sceneAPIUrl = base()+"spacyLensScene"
-const fetchitAPIUrl = base()+`spacyLensFetchit`
+const sceneAPIUrl = base1+"spacyLensScene"
+const fetchitAPIUrl = base1+`spacyLensFetchit`
 //-- Private:
 const sceneMap = new Map()
 let activeScene = null
@@ -63,10 +63,6 @@ let delay1 = 1000
 let delay2 = 5000
 let onPicTap
 
-// warm up both backends, speeds i sthe name of the game.
-getScene ('warmup', 'bingu').then (s => console.log ("OK: " + s.title))
-fetchit ('warmup').then (r => console.log ("OK: " + r))
-
 export function equipImages (id) {
     onPicTap = e => getSceneThenReact (e, id)
     const images = document.getElementsByTagName ('img');
@@ -114,14 +110,10 @@ const magicSlides = (() => { // Maximum 10 slides at a time.
     })()
 
 function getSceneThenReact (event, domainId) {
-    console.log ("WOWOWOW " + domainId)
-    console.log (event)
     const image = event.target
     getScene (image.src, domainId)
         .then (scene => {
             activeScene = scene
-    console.log ("OOOOHHHH")
-    console.log (scene)
             if (scene.id) { // otherwise nothing happens
                 placeMagicSlides (scene.frames, image) // in case scrolling happened, or image resized, etc...
                 picTap (event, scene.frames)
@@ -313,3 +305,8 @@ function fetchit (url) {
         return ('Fetch error')
         }
     }
+
+// warm up both backends
+getScene ('warmup', 'bingu').then (s => console.log ("OK: " + s.title))
+fetchit ('warmup').then (r => console.log ("OK: " + r))
+
