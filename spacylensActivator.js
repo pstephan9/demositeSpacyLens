@@ -33,7 +33,7 @@ let inlineCSS = `
         border-style: solid;
         border-width: 2px;
         border-radius: 6px;
-        border-color: yellow;
+        border-color: #aaaaff;
         z-index: 1;
         display: flex;
         }
@@ -61,8 +61,8 @@ let inlineCSS = `
         } `
 let delay1 = 1000
 let delay2 = 5000
+let redirects
 
-let redirectTarget
 let onPicTap
 
 export function equipImages (domainId, overrides) {
@@ -73,9 +73,9 @@ export function equipImages (domainId, overrides) {
         img.addEventListener ('click', onPicTap, true)
         }
     if (overrides) {
-        redirectTarget = overrides.iFrame
         dialog = overrides.dialog || dialog
         magicSlides = overrides.magicSlides || magicSlides
+        redirects = overrides.redirects
         }
     }
 
@@ -179,8 +179,10 @@ function onSlideMouseDown (e) {
 
 let actAndShow = (frame, slide) => { // Perform action and show a small popup called 'dialog'
     actOn (frame)
-    slide.appendChild (dialog)
-    dialog.style.display = 'flex'
+    if (frame.actionIndex != 2) {
+        slide.appendChild (dialog)
+        dialog.style.display = 'flex'
+        }
     }
 
 let actOn = frame => {
@@ -188,21 +190,17 @@ let actOn = frame => {
     switch (ai) {
         case 1: // buy
             dialog.innerHTML = "Thank you!<br><br>Billed " + frame.param1
-            break;
-        case 2: // 
-            if (redirectTarget) {
-                redirectTarget.src = frame.param1
-                redirectTarget.style.display = 'block'
-                }
-            else
-                window.location = frame.param1
-            break;
-        case 3: 
+            break
+        case 2: // redirect
+            cleanup ()
+            window.open(frame.param1, redirects || '_blank');
+            break
+        case 3:  // learn
             dialog.innerHTML = `<span class="spacyLens_focusTag">${frame.param1}</span>`
-            break;
+            break
         case 4: 
             dialog.innerHTML = `<span class="spacyLens_focusTag">${frame.param1}</span>`
-            break;
+            break
         case 5: 
             dialog.innerHTML = `<span class="spacyLens_focusTag" style="font-style: italic"> Calling API ...</span>`
             try {
@@ -247,14 +245,14 @@ function activateSlide (i) {
             break
         case 2: // redirect
             slide.innerHTML = `<span class="spacyLens_focusTag">🔗</span>`
-            break // learn
-        case 3: 
+            break 
+        case 3: // learn
             slide.innerHTML = `<span class="spacyLens_focusTag">${frame.param1}</span>`
             break
-        case 4: 
+        case 4: // contact
             slide.innerHTML = `<span class="spacyLens_focusTag">🛎</span>`
             break
-        case 5: 
+        case 5: // call API
             slide.innerHTML = `<span class="spacyLens_focusTag">🔑</span>`
             actAndShow (frame, slide)
             break

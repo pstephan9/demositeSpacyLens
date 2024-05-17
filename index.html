@@ -13,10 +13,10 @@
         font-family: "Permanent Marker";
         background-color: white ; /* rgba(42, 38, 33, 0.54); */
         display: flex; flex-direction: column; align-items: center;
+        box-shadow: 6px 6px 13px 2px lightgrey;
         }
       .deviceFrame {
         width: 337px;
-        height: 675;
         border-radius: 4px;
         border: 1px solid lightgrey;
         display: flex; flex-direction: column; align-items: center;
@@ -59,36 +59,17 @@
         padding: 4px 0 32px 0;
         font-size: 30px
         }
-      .iFrame {
-        position: absolute;
-        border-radius: 4px;
-        display: none;
-        }
-      .gitHub {
-        position: absolute;
-        right: 16px; bottom: 0px;
-        font-size: 12px; color: grey
-      }
       </style>
     </head>
-  <body>
-    <div class="deviceFrame">
-      <div class="demoSiteHeadline">
-        Demo page 
-        <a class="gitHub" href="https://github.com/pstephan9/demositeSpacyLens">(with SpacyLens)</a>
-      </div>
-      
+  <body class="deviceFrame">
+      <div class="demoSiteHeadline"> Demo page </div>
       <div class="carousel"> <!-- These pictures are arbitrary-->
         <img class="carousel-cell " src="https://sp.apolloboxassets.com/vendor/product/productImages/2024-04-29/kRqE81.jpg" >
         <img class="carousel-cell " src="https://cdn.shopify.com/s/files/1/0937/1176/products/Super3_Gunmetal_Hand_800x800_800x800_bb506f6e-49f2-48c4-9c22-d2c4fa413af5.jpg?v=1640890554" >
-        <img class="carousel-cell " src="https://www.mapplethorpe.org/custom/media/cache/resolve/enlarge/5f8de35a13a8375f7b8b4567/e4a578cba9bd07cf8bc2762e9998a487.jpeg" >
+        <img class="carousel-cell " src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/2cc63c39-c53b-4b37-bf1f-a3a3810ad232/dg77dqg-822d0428-02d0-4020-8d1b-eba275db98a8.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzJjYzYzYzM5LWM1M2ItNGIzNy1iZjFmLWEzYTM4MTBhZDIzMlwvZGc3N2RxZy04MjJkMDQyOC0wMmQwLTQwMjAtOGQxYi1lYmEyNzVkYjk4YTgucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.HFzjuirEBQltuFv2m5QVFaSBlzMEtbhZDvcNpZ15t7s" >
         <img class="carousel-cell " src="https://www.jiomart.com/images/product/original/rvnewnfqs5/lapo-door-locks-for-main-door-lock-handle-set-with-3-brass-key-matt-finish-ro-178-product-images-orvnewnfqs5-p599971120-0-202303291836.jpg?im=Resize=(420,420)" >
         </div>
-        <iframe class="carousel-cell iFrame" src="https://www.youtube.com/embed/dQw4w9WgXcQ" width="560" height="315" frameborder="2" allowfullscreen></iframe>
-        <div class="demoSiteLegend"></div>
-
-
-
+      <div class="demoSiteLegend"></div>
 
       <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
       <script type="module" >
@@ -97,10 +78,9 @@
         
         // Using great scroll component for demo purposes:
         const flkty = new Flickity( '.carousel', {wrapAround: true})
-        let iFrame
         flkty.on( 'change', cleanit )
         flkty.on( 'settle', i => updateLegend() )
-        const legends = ['Tap to Buy', 'Get lucky', 'Go to the museum', 'Call an API']
+        const legends = ['Tap to Buy', 'Get lucky', 'Go to the store', 'Call an API']
         const legendEl = document.getElementsByClassName ('demoSiteLegend')[0]
         let legend = legends[0]
         function updateLegend (forced) {
@@ -110,21 +90,16 @@
         function cleanit() {
           if (legend != '...') {
             updateLegend ('...');
-            iFrame.style.display = 'none'
             cleanup() 
             }
           }
-
         updateLegend ()
-        iFrame = document.getElementsByClassName ('iFrame')[0]
-        document.getElementsByClassName ('flickity-viewport')[0].appendChild (iFrame)
         //
 
-         // Connect a SpacyLens (domain "sandbox3") where all the img shown here have been enabled:
+         // Connect a SpacyLens (domain "sandbox3") where all the img shown here have been equipped.
          // replace with your own domain Id to start and change behaviors with your SpacyLens
-         // Don't pass any test iFrame if you want regular navigation for the user, i.e. changing window.location
-         equipImages('sandbox3', {iFrame})
+         equipImages('sandbox3', {redirects: '_blank'})
         
         </script>
-
-</body>
+    </body>
+  </html>
