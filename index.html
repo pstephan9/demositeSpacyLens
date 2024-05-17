@@ -27,12 +27,12 @@
         overflow: hidden; margin: 16px 4px 0px 4px !important; border-radius: 6px; 
         }
       .carousel-cell {
-        height: 280px;
+        height: 300px;
         width: 320px;
         border-radius: 4px;
         }
       .demoSiteHeadline {
-        color: lightgrey;
+        color: grey;
         height: 50px;
         width: 100%;
         margin: 16px 0 16px 16px;
@@ -74,8 +74,8 @@
   <body>
     <div class="deviceFrame">
       <div class="demoSiteHeadline">
-        Demo page using SpacyLens 
-        <a class="gitHub" href="https://github.com/pstephan9/demositeSpacyLens">(gitHub)</a>
+        Demo page 
+        <a class="gitHub" href="https://github.com/pstephan9/demositeSpacyLens">(with SpacyLens)</a>
       </div>
       
       <div class="carousel"> <!-- These pictures are arbitrary-->
@@ -120,10 +120,10 @@
         document.getElementsByClassName ('flickity-viewport')[0].appendChild (iFrame)
         //
 
-         // Connect a SpacyLens (domain "sandbox3") where img shown here have been enabled:
+         // Connect a SpacyLens (domain "sandbox3") where all the img shown here have been enabled:
          // replace with your own domain Id to start and change behaviors with your SpacyLens
-         // Don't pass any test iFrame if you want regular navigation for the user.
-         equipImages('sandbox3', iFrame)
+         // Don't pass any test iFrame if you want regular navigation for the user, i.e. changing window.location
+         equipImages('sandbox3', {iFrame})
         
         </script>
 
