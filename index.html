@@ -28,15 +28,17 @@
         }
       .carousel-cell {
         height: 280px;
-        width: 300px;
+        width: 320px;
         border-radius: 4px;
         }
       .demoSiteHeadline {
         color: lightgrey;
+        height: 50px;
         width: 100%;
         margin: 16px 0 16px 16px;
         text-align: start;
-        font-size: 20px
+        font-size: 20px;
+        position: relative;
         }
       .demoSiteLegend {
         width: 100%; font-size: 30px;
@@ -57,18 +59,36 @@
         padding: 4px 0 32px 0;
         font-size: 30px
         }
+      .iFrame {
+        position: absolute;
+        border-radius: 4px;
+        display: none;
+        }
+      .gitHub {
+        position: absolute;
+        right: 16px; bottom: 0px;
+        font-size: 12px; color: grey
+      }
       </style>
     </head>
   <body>
     <div class="deviceFrame">
-      <div class="demoSiteHeadline"> Your page with images </div>
+      <div class="demoSiteHeadline">
+        Demo page using SpacyLens 
+        <a class="gitHub" href="https://github.com/pstephan9/demositeSpacyLens">(gitHub)</a>
+      </div>
+      
       <div class="carousel"> <!-- These pictures are arbitrary-->
-        <img class="carousel-cell "src="https://sp.apolloboxassets.com/vendor/product/productImages/2021-12-09/qHhnnArray_11.jpg" >
-        <img class="carousel-cell "src="https://cdn.shopify.com/s/files/1/0937/1176/products/Super3_Gunmetal_Hand_800x800_800x800_bb506f6e-49f2-48c4-9c22-d2c4fa413af5.jpg?v=1640890554" >
-        <img class="carousel-cell "src="https://www.mapplethorpe.org/custom/media/cache/resolve/enlarge/5f8de35a13a8375f7b8b4567/e4a578cba9bd07cf8bc2762e9998a487.jpeg" >
-        <img class="carousel-cell "src="https://www.jiomart.com/images/product/original/rvnewnfqs5/lapo-door-locks-for-main-door-lock-handle-set-with-3-brass-key-matt-finish-ro-178-product-images-orvnewnfqs5-p599971120-0-202303291836.jpg?im=Resize=(420,420)" >
+        <img class="carousel-cell " src="https://sp.apolloboxassets.com/vendor/product/productImages/2024-04-29/kRqE81.jpg" >
+        <img class="carousel-cell " src="https://cdn.shopify.com/s/files/1/0937/1176/products/Super3_Gunmetal_Hand_800x800_800x800_bb506f6e-49f2-48c4-9c22-d2c4fa413af5.jpg?v=1640890554" >
+        <img class="carousel-cell " src="https://www.mapplethorpe.org/custom/media/cache/resolve/enlarge/5f8de35a13a8375f7b8b4567/e4a578cba9bd07cf8bc2762e9998a487.jpeg" >
+        <img class="carousel-cell " src="https://www.jiomart.com/images/product/original/rvnewnfqs5/lapo-door-locks-for-main-door-lock-handle-set-with-3-brass-key-matt-finish-ro-178-product-images-orvnewnfqs5-p599971120-0-202303291836.jpg?im=Resize=(420,420)" >
         </div>
-      <div class="demoSiteLegend"></div>
+        <iframe class="carousel-cell iFrame" src="https://www.youtube.com/embed/dQw4w9WgXcQ" width="560" height="315" frameborder="2" allowfullscreen></iframe>
+        <div class="demoSiteLegend"></div>
+
+
+
 
       <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
       <script type="module" >
@@ -77,9 +97,9 @@
         
         // Using great scroll component for demo purposes:
         const flkty = new Flickity( '.carousel', {wrapAround: true})
-        flkty.on( 'scroll', cleanit )
+        let iFrame
+        flkty.on( 'change', cleanit )
         flkty.on( 'settle', i => updateLegend() )
-        function cleanit () { if (legend != '...') { updateLegend ('...'); cleanup() } }
         const legends = ['Tap to Buy', 'Get lucky', 'Go to the museum', 'Call an API']
         const legendEl = document.getElementsByClassName ('demoSiteLegend')[0]
         let legend = legends[0]
@@ -87,12 +107,23 @@
           legend = forced?forced:legends[flkty.selectedIndex]
           legendEl.textContent = legend
           }
+        function cleanit() {
+          if (legend != '...') {
+            updateLegend ('...');
+            iFrame.style.display = 'none'
+            cleanup() 
+            }
+          }
+
         updateLegend ()
+        iFrame = document.getElementsByClassName ('iFrame')[0]
+        document.getElementsByClassName ('flickity-viewport')[0].appendChild (iFrame)
         //
 
          // Connect a SpacyLens (domain "sandbox3") where img shown here have been enabled:
          // replace with your own domain Id to start and change behaviors with your SpacyLens
-         equipImages('sandbox3')
+         // Don't pass any test iFrame if you want regular navigation for the user.
+         equipImages('sandbox3', iFrame)
         
         </script>
 

@@ -61,9 +61,12 @@ let inlineCSS = `
 let dialog
 let delay1 = 1000
 let delay2 = 5000
+
+let redirectTarget
 let onPicTap
 
-export function equipImages (id) {
+export function equipImages (id, iFrame) {
+    redirectTarget = iFrame
     onPicTap = e => getSceneThenReact (e, id)
     const images = document.getElementsByTagName ('img');
     for (let i = 0; i < images.length; i++) {
@@ -180,8 +183,12 @@ function actOn (frame) {
             dialog.innerHTML = "Thank you!<br><br>Billed " + frame.param1
             break;
         case 2: // 
-            dialog.innerHTML = `<span class="spacyLens_focusTag">Going here:</a><br>
-            <a href="${frame.param1}">${frame.param1}</a></span>`
+            if (redirectTarget) {
+                redirectTarget.src = frame.param1
+                redirectTarget.style.display = 'block'
+                }
+            else
+                window.location = frame.param1
             break;
         case 3: 
             dialog.innerHTML = `<span class="spacyLens_focusTag">${frame.param1}</span>`
