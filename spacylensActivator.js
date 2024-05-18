@@ -7,7 +7,54 @@ const sceneMap = new Map()
 let activeScene = null
 let activeSlide = null
 let lastTapTime = 0
-//-- Overridable:
+let onImgClick
+//--
+export function equipImages (domainId, overrides) {
+    onImgClick = event => getSceneThenReact (event, domainId)
+    const images = document.getElementsByTagName ('img');
+    for (let i = 0; i < images.length; i++) {
+        const img = images[i]
+        img.addEventListener ('click', onImgClick, true)
+        }
+    if (overrides) {
+        delay1 = overrides.delay1 || delay1
+        delay2 = overrides.delay2 || delay2
+        dialog = overrides.dialog || dialog
+        magicSlides = overrides.magicSlides || magicSlides
+        redirectTarget = overrides.redirectTarget || redirectTarget
+        inlineCSS = inlineCSS + overrides.inlineCSS
+        }
+    const style = document.createElement('style');
+    style.textContent = inlineCSS;
+    document.head.appendChild(style)
+    }
+
+export function cleanup () {
+    hideMagicSlides (false, true)
+    hideDialog()
+    }
+
+//-- Inlined config, for speed:
+let delay1 = 1000
+let delay2 = 3000
+let redirectTarget = "_blank"
+let magicSlides = (() => { // Maximum 10 slides at a time.
+    const result = new Array(10)
+    for (let i = 0; i < 10; i++) {
+        const ms = document.createElement("div")
+        ms.classList.add ("spacyLens_magicSlide")
+        ms.addEventListener ('mousedown', onSlideMouseDown)
+        document.body.appendChild (ms)
+        result[i] = ms
+        }
+    return result
+    })()
+let dialog = (() => {
+    const r = document.createElement("div")
+    r.classList.add ("spacyLens_dialog")
+    r.addEventListener ('mousedown', hideDialog)
+    return r
+    })()
 let inlineCSS = `
     .spacyLens_dialog {
         position: absolute;
@@ -24,7 +71,7 @@ let inlineCSS = `
         z-index: 3;
         }
     .spacyLens_magicSlide {
-        position: absolute; top: -100px;
+        position: absolute;
         flex-direction: column;
         align-items: center;
         background-color: transparent;
@@ -33,9 +80,8 @@ let inlineCSS = `
         border-style: solid;
         border-width: 2px;
         border-radius: 6px;
-        border-color: #aaaaff;
+        border-color: yellow;
         z-index: 1;
-        display: flex;
         }
     .spacyLens_activeSlide {
         border-width: 2px;
@@ -58,31 +104,9 @@ let inlineCSS = `
         font-family: Permanent Marker;
         background-color: white; /*rgba(255, 255, 255, 0.5)*/
         color: orange
-        } `
-let delay1 = 1000
-let delay2 = 5000
-let redirects
-
-let onPicTap
-
-export function equipImages (domainId, overrides) {
-    onPicTap = e => getSceneThenReact (e, domainId)
-    const images = document.getElementsByTagName ('img');
-    for (let i = 0; i < images.length; i++) {
-        const img = images[i]
-        img.addEventListener ('click', onPicTap, true)
         }
-    if (overrides) {
-        dialog = overrides.dialog || dialog
-        magicSlides = overrides.magicSlides || magicSlides
-        redirects = overrides.redirects
-        }
-    }
-
-export function cleanup () {
-    hideMagicSlides (false, true)
-    hideDialog()
-    }
+    `
+//--
 
 function hideMagicSlides (keepActiveSlide, forceIt) {
     if (!forceIt) {
@@ -96,28 +120,6 @@ function hideMagicSlides (keepActiveSlide, forceIt) {
                 slide.style.display = "none"
                 })
     }
-
-let magicSlides = (() => { // Maximum 10 slides at a time.
-    const style = document.createElement('style');
-    style.textContent = inlineCSS;
-    document.head.appendChild(style)
-    const result = new Array(10)
-    for (let i = 0; i < 10; i++) {
-        const ms = document.createElement("div")
-        ms.classList.add ("spacyLens_magicSlide")
-        ms.addEventListener ('mousedown', onSlideMouseDown)
-        document.body.appendChild (ms)
-        result[i] = ms
-        }
-    return result
-    })()
-
-let dialog = (() => {
-    const r = document.createElement("div")
-    r.classList.add ("spacyLens_dialog")
-    r.addEventListener ('mousedown', hideDialog)
-    return r
-    })()
 
 function getSceneThenReact (event, domainId) {
     const image = event.target
@@ -193,7 +195,7 @@ let actOn = frame => {
             break
         case 2: // redirect
             cleanup ()
-            window.open(frame.param1, redirects || '_blank');
+            window.open(frame.param1, redirectTarget || '_blank');
             break
         case 3:  // learn
             dialog.innerHTML = `<span class="spacyLens_focusTag">${frame.param1}</span>`
@@ -245,7 +247,6 @@ function activateSlide (i) {
             break
         case 2: // redirect
             slide.innerHTML = `<span class="spacyLens_focusTag">🔗</span>`
-            console.log ("YO")
             actOn (frame)
             break 
         case 3: // learn
@@ -323,4 +324,3 @@ function fetchit (url) {
 // warm up both backends
 getScene ('warmup', 'bingu').then (s => console.log ("OK: " + s.title))
 fetchit ('warmup').then (r => console.log ("OK: " + r))
-
