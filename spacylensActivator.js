@@ -80,7 +80,7 @@ let inlineCSS = `
         border-style: solid;
         border-width: 2px;
         border-radius: 6px;
-        border-color: yellow;
+        border-color: #aaaaff;
         z-index: 1;
         }
     .spacyLens_activeSlide {
