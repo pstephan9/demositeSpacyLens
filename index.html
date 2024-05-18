@@ -80,7 +80,7 @@
         const flkty = new Flickity( '.carousel', {wrapAround: true})
         flkty.on( 'change', cleanit )
         flkty.on( 'settle', i => updateLegend() )
-        const legends = ['Tap to Buy', 'Get lucky', 'Go to the store', 'Call an API']
+        const legends = ['Tap to Buy', 'Take your pick', 'Go to the store', 'Unlock wisdom']
         const legendEl = document.getElementsByClassName ('demoSiteLegend')[0]
         let legend = legends[0]
         function updateLegend (forced) {
@@ -98,7 +98,7 @@
 
          // Connect a SpacyLens (domain "sandbox3") where all the img shown here have been equipped.
          // replace with your own domain Id to start and change behaviors with your SpacyLens
-         equipImages('sandbox3', {redirects: '_blank'})
+         equipImages('sandbox3', {redirects: '_self'})
         
         </script>
     </body>

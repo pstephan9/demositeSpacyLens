@@ -245,6 +245,8 @@ function activateSlide (i) {
             break
         case 2: // redirect
             slide.innerHTML = `<span class="spacyLens_focusTag">🔗</span>`
+            console.log ("YO")
+            actOn (frame)
             break 
         case 3: // learn
             slide.innerHTML = `<span class="spacyLens_focusTag">${frame.param1}</span>`
