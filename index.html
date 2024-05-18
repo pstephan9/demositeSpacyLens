@@ -66,7 +66,7 @@
       <div class="carousel"> <!-- These pictures are arbitrary-->
         <img class="carousel-cell " src="https://sp.apolloboxassets.com/vendor/product/productImages/2024-04-29/kRqE81.jpg" >
         <img class="carousel-cell " src="https://cdn.shopify.com/s/files/1/0937/1176/products/Super3_Gunmetal_Hand_800x800_800x800_bb506f6e-49f2-48c4-9c22-d2c4fa413af5.jpg?v=1640890554" >
-        <img class="carousel-cell " src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/2cc63c39-c53b-4b37-bf1f-a3a3810ad232/dg77dqg-822d0428-02d0-4020-8d1b-eba275db98a8.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzJjYzYzYzM5LWM1M2ItNGIzNy1iZjFmLWEzYTM4MTBhZDIzMlwvZGc3N2RxZy04MjJkMDQyOC0wMmQwLTQwMjAtOGQxYi1lYmEyNzVkYjk4YTgucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.HFzjuirEBQltuFv2m5QVFaSBlzMEtbhZDvcNpZ15t7s" >
+        <img class="carousel-cell " src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Three_Boats_And_A_Lake_%28189522955%29.jpeg" >
         <img class="carousel-cell " src="https://www.jiomart.com/images/product/original/rvnewnfqs5/lapo-door-locks-for-main-door-lock-handle-set-with-3-brass-key-matt-finish-ro-178-product-images-orvnewnfqs5-p599971120-0-202303291836.jpg?im=Resize=(420,420)" >
         </div>
       <div class="demoSiteLegend"></div>
@@ -76,11 +76,11 @@
 
         import { equipImages, cleanup } from './spacylensActivator.js'
         
-        // Using great scroll component for demo purposes:
+        // Vanilla demo site code, using great flickity carousel:
         const flkty = new Flickity( '.carousel', {wrapAround: true})
         flkty.on( 'change', cleanit )
         flkty.on( 'settle', i => updateLegend() )
-        const legends = ['Tap to Buy', 'Take your pick', 'Go to the store', 'Unlock wisdom']
+        const legends = ['Tap to Buy', 'Try your luck', 'Visit the boat store', 'Unlock wisdom']
         const legendEl = document.getElementsByClassName ('demoSiteLegend')[0]
         let legend = legends[0]
         function updateLegend (forced) {
@@ -94,14 +94,16 @@
             }
           }
         updateLegend ()
-        //
+        // End of vanilla demo site 
 
-         // Connect a SpacyLens (domain "sandbox3") where all the img shown here have been equipped.
-         // replace with your own domain Id to start and change behaviors with your SpacyLens
-         equipImages('sandbox3', {redirectTarget: '_blank', inlineCSS: '.spacyLens_magicSlide {border-color: #aaaaff}'})
+        // Now the line you would add to your page (in addition to "import { equipImages } from './spacylensActivator.js'"),
+        // this connects a SpacyLens (domain "sandbox3") where some pictures have been / will be equipped.
+        equipImages('sandbox3')
 
-        
-
+        // Replace with your own domain Id to start and change behaviors with your own SpacyLens
+        // A picture is identified by its src and called a "scene" in SpacyLens
+        // See ./spacylensActivator.js to see which UI defaults you may override, as in:
+        //    equipImages('sandbox3', {redirectTarget: '_blank', inlineCSS: '.spacyLens_magicSlide {border-color: red}'})
 
         </script>
     </body>

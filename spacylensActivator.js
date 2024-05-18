@@ -37,7 +37,7 @@ export function cleanup () {
 //-- Inlined config, for speed:
 let delay1 = 1000
 let delay2 = 3000
-let redirectTarget = "_blank"
+let redirectTarget = "_self"
 let magicSlides = (() => { // Maximum 10 slides at a time.
     const result = new Array(10)
     for (let i = 0; i < 10; i++) {
