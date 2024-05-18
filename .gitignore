@@ -403,3 +403,5 @@ FodyWeavers.xsd
 .firebase
 .firebaserc
 firebase.json
+deployit.sh
+emulatit.sh
