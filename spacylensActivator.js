@@ -1,4 +1,7 @@
+let demoUrl
 //const base = () => {console.warn ("ACTHUNG"); return `http://127.0.0.1:5001/spacybuy/us-central1/`}
+//if (import.meta.env.DEV) 
+//    console.warn ("ACTHUNG"); return `http://127.0.0.1:5001/spacybuy/us-central1/`}
 const base1 = `https://us-central1-spacybuy.cloudfunctions.net/`
 const sceneAPIUrl = base1+"spacyLensScene"
 const fetchitAPIUrl = base1+`spacyLensFetchit`
@@ -21,9 +24,13 @@ export function equipImages (domainId, overrides) {
         delay2 = overrides.delay2 || delay2
         dialog = overrides.dialog || dialog
         magicSlides = overrides.magicSlides || magicSlides
-        redirectTarget = overrides.redirectTarget || redirectTarget
+        redirectTargetWindow = overrides.redirectTargetWindow || window
         inlineCSS = inlineCSS + overrides.inlineCSS
         }
+    window.addEventListener ("message", event => {
+        console.log ("OMG, an event for activator: ")
+        console.log (event.data)
+        }, false)        
     const style = document.createElement('style');
     style.textContent = inlineCSS;
     document.head.appendChild(style)
@@ -37,7 +44,7 @@ export function cleanup () {
 //-- Inlined config, for speed:
 let delay1 = 1000
 let delay2 = 3000
-let redirectTarget = "_self"
+let redirectTargetWindow
 let magicSlides = (() => { // Maximum 10 slides at a time.
     const result = new Array(10)
     for (let i = 0; i < 10; i++) {
@@ -195,15 +202,15 @@ let actOn = frame => {
             break
         case 2: // redirect
             cleanup ()
-            window.open(frame.param1, redirectTarget || '_blank');
+            window.open(frame.param1, redirectTargetWindow || '_blank')
             break
         case 3:  // learn
             dialog.innerHTML = `<span class="spacyLens_focusTag">${frame.param1}</span>`
             break
-        case 4: 
+        case 4: // contact someone
             dialog.innerHTML = `<span class="spacyLens_focusTag">${frame.param1}</span>`
             break
-        case 5: 
+        case 5: // call an API
             dialog.innerHTML = `<span class="spacyLens_focusTag" style="font-style: italic"> Calling API ...</span>`
             try {
                 fetch (fetchitAPIUrl, {method: 'POST',

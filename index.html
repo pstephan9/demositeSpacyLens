@@ -93,7 +93,12 @@
             cleanup() 
             }
           }
+        function answerIframe (event) {
+          console.log ("OOOH")
+          console.log (event.data)
+          }
         updateLegend ()
+        
         // End of vanilla demo site 
 
         // Now the line you would add to your page (in addition to "import { equipImages } from './spacylensActivator.js'"),
@@ -101,7 +106,7 @@
         equipImages('sandbox3')
 
         // Replace with your own domain Id to start and change behaviors with your own SpacyLens
-        // A picture is identified by its src and called a "scene" in SpacyLens
+        // A picture is identified by its src and managed as a "scene" in SpacyLens
         // See ./spacylensActivator.js to see which UI defaults you may override, as in:
         //    equipImages('sandbox3', {redirectTarget: '_blank', inlineCSS: '.spacyLens_magicSlide {border-color: red}'})
 
