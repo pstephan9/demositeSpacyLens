@@ -1,4 +1,4 @@
-// Client code to make use of SpacyLens 
+// SpacyLens Client code to import  
 
 //-- What to call once img elements are in the DOM:
 export function equipImages (domainId, overrides) {
@@ -27,8 +27,6 @@ export function cleanup () {
 
 //-- Private:
 let base1 = `https://us-central1-spacybuy.cloudfunctions.net/`
-//if (import.meta.env.DEV) 
-//    console.warn ("ACTHUNG"); base1 = `http://127.0.0.1:5001/spacybuy/us-central1/`}
 const sceneAPIUrl = base1+"spacyLensScene"
 const fetchitAPIUrl = base1+`spacyLensFetchit`
 const sceneMap = new Map()
@@ -67,11 +65,11 @@ let inlineCSS = `
         box-shadow: 3px 3px 2px 2px rgba(228, 169, 111, 0.49);
         background-color: white;
         min-width: 140px;
-        display: none;
         font-family: Permanent Marker;
         color: orange;
         padding: 8px;
         z-index: 3;
+        display: none;
         }
     .spacyLens_magicSlide {
         position: absolute;
@@ -127,19 +125,24 @@ function hideMagicSlides (keepActiveSlide, forceIt) {
 
 function getSceneThenReact (event, domainId) {
     const image = event.target
-    getScene (image.src, domainId)
-        .then (scene => {
-            activeScene = scene
-            if (scene.id) // otherwise nothing happens
-                picTap (event, scene.frames, image)
-            })
+    const scene = sceneMap.get (image.src)
+    const activateAndReact = scene => {
+        activeScene = scene
+        if (scene.id) // otherwise nothing happens
+            react (event, scene.frames, image)
+        }
+    if (scene) // Safari is more open to synchronous window.open if part of a click as of 5/20/24
+        activateAndReact (scene)
+    else // let's go async:
+        getScene (image.src, domainId)
+        .then (activateAndReact)
     }
 
 function hideDialog () {
     dialog.style.display = 'none'
     }
 
-function picTap (event, frames) {
+function react (event, frames) {
     const image = event.target
     const W = image.width
     const H = image.height
@@ -161,13 +164,12 @@ function picTap (event, frames) {
             slide.style.width = W*frame.normW+"px";
             slide.style.height = H*frame.normH+"px";
             slide.dataset.spacyLensFrameI = i
+            slide.style['border-width'] = '2px'
             const clicked = ((normx>=0)&&(normx<=frame.normW)&&(normy>=0)&&(normy<=frame.normH)) 
             if (clicked)
                 lastClickedI = i
             slide.style.display = 'flex'
             }
-        else
-            slide.style.display = 'none'
         })
     if (lastClickedI != -1)
         activateSlide (lastClickedI)
@@ -270,25 +272,20 @@ function activateSlide (i) {
     }
 
 function getScene (src, domainId) {
-    const scene = sceneMap.get (src)
-    if (scene)
-        return Promise.resolve (scene)
-    else {
-        try {
-            return fetch (sceneAPIUrl, {method: 'POST',
-                                headers: {'Content-Type': 'application/json'},
-                                body: JSON.stringify ({domainId: domainId, pic: src})
-                                })
-            .then(res => res.json())
-            .then (scene => {
-                sceneMap.set (src, scene)    
-                return scene 
-                })
-            }
-        catch (e) {
-            console.warn ({reason: 'Error getting: ' + JSON.stringify (e)})
-            return Promise.resolve (mockScene)
-            }
+    try {
+        return fetch (sceneAPIUrl, {method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify ({domainId: domainId, pic: src})
+                            })
+        .then(res => res.json())
+        .then (scene => {
+            sceneMap.set (src, scene)    
+            return scene 
+            })
+        }
+    catch (e) {
+        console.warn ({reason: 'Error getting: ' + JSON.stringify (e)})
+        return Promise.resolve (mockScene)
         }
     }
 
