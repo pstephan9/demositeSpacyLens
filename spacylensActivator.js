@@ -207,7 +207,7 @@ let actOn = frame => {
             break
         case 2: // redirect
             cleanup ()
-            if ((redirectTarget === '_postParent') && (window.parent != window))
+            if (redirectTarget === '_postParent')
                 window.parent.postMessage(frame.param1)
             else
                 window.location = frame.param1 // We'll see how wix or shopify would want that. 5/21/24
