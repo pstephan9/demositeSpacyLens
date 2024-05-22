@@ -3,14 +3,14 @@
   <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Acme widgets</title>
     <style>
       body {
-        font-family: "Permanent Marker";
+        font-family: "Atkinson Hyperlegible";
         background-color: white ; /* rgba(42, 38, 33, 0.54); */
         display: flex; flex-direction: column; align-items: center;
         box-shadow: 6px 6px 13px 2px lightgrey;
@@ -30,8 +30,9 @@
         width: 320px;
         border-radius: 4px;
         }
+      .flickity-button { margin-top: 30px}
       .demoSiteHeadline {
-        color: grey;
+        color: rgb(175, 93, 13);
         height: 50px;
         width: 100%;
         margin: 16px 0 16px 16px;
@@ -45,7 +46,7 @@
         padding: 16px;
         margin: 16px;
         overflow: visible;
-        color: grey;
+        color: rgb(175, 93, 13);
         }
       .demoSitePrompt {
         width: 100%;
@@ -61,7 +62,7 @@
       </style>
     </head>
   <body class="deviceFrame">
-      <div class="demoSiteHeadline"> Your existing web site </div>
+      <div class="demoSiteHeadline"> Your web page </div>
       <div class="carousel"> <!-- These pictures are arbitrary-->
         <img class="carousel-cell" src="https://sp.apolloboxassets.com/vendor/product/productImages/2024-04-29/kRqE81.jpg" >
         <img class="carousel-cell" src="https://cdn.shopify.com/s/files/1/0937/1176/products/Super3_Gunmetal_Hand_800x800_800x800_bb506f6e-49f2-48c4-9c22-d2c4fa413af5.jpg?v=1640890554" >
@@ -79,7 +80,7 @@
         const flkty = new Flickity( '.carousel', {wrapAround: true})
         flkty.on( 'change', cleanit )
         flkty.on( 'settle', i => updateLegend() )
-        const legends = ['Tap to buy', 'Try your luck', 'Unlock wisdom', 'Visit our store']
+        const legends = ['Take your pick', 'Separate each object', 'Unlock', 'Jump to exact product']
         const legendEl = document.getElementsByClassName ('demoSiteLegend')[0]
         let legend = legends[0]
         function updateLegend (forced) {

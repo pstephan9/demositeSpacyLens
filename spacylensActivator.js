@@ -63,13 +63,13 @@ let inlineCSS = `
     .spacyLens_dialog {
         position: absolute;
         margin: 24px 0 0 16px;
-        border: 1px solid orange;
+        border: 1px solid rgb(175, 93, 13);
         border-radius: 2px;
         box-shadow: 3px 3px 2px 2px rgba(228, 169, 111, 0.49);
         background-color: white;
         min-width: 140px;
         font-family: Permanent Marker;
-        color: orange;
+        color: rgb(175, 93, 13);
         padding: 8px;
         z-index: 3;
         display: none;
@@ -108,7 +108,7 @@ let inlineCSS = `
         padding: 4px;
         font-family: Permanent Marker;
         background-color: white; /*rgba(255, 255, 255, 0.5)*/
-        color: orange
+        color: rgb(175, 93, 13)
         }
     `
 //-- Implementation:
