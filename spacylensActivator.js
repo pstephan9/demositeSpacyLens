@@ -68,11 +68,11 @@ let inlineCSS = `
         box-shadow: 3px 3px 2px 2px rgba(228, 169, 111, 0.49);
         background-color: white;
         min-width: 140px;
-        font-family: Permanent Marker;
         color: rgb(175, 93, 13);
         padding: 8px;
         z-index: 3;
         display: none;
+        justify-content: start;
         }
     .spacyLens_magicSlide {
         position: absolute;
@@ -89,7 +89,6 @@ let inlineCSS = `
         display: none;
         }
     .spacyLens_activeSlide {
-        border-width: 2px;
         border-top-color: rgba(255, 255, 255, 0.5);
         border-left-color: rgba(255, 255, 255, 0.8);
         border-bottom-color: rgba(128, 128, 128, 0.8);
@@ -106,7 +105,6 @@ let inlineCSS = `
         text-align: center;
         max-width: 100%;
         padding: 4px;
-        font-family: Permanent Marker;
         background-color: white; /*rgba(255, 255, 255, 0.5)*/
         color: rgb(175, 93, 13)
         }
@@ -167,7 +165,6 @@ function react (event, frames) {
             slide.style.width = W*frame.normW+"px";
             slide.style.height = H*frame.normH+"px";
             slide.dataset.spacyLensFrameI = i
-            slide.style['border-width'] = '2px'
             const clicked = ((normx>=0)&&(normx<=frame.normW)&&(normy>=0)&&(normy<=frame.normH)) 
             if (clicked)
                 lastClickedI = i
@@ -220,7 +217,7 @@ let actOn = frame => {
             dialog.innerHTML = `<span class="spacyLens_focusTag">${frame.param1}</span>`
             break
         case 5: // call an API
-            dialog.innerHTML = `<span class="spacyLens_focusTag" style="font-style: italic"> Calling API ...</span>`
+            dialog.innerHTML = `<span class="spacyLens_focusTag"> Calling API ...</span>`
             try {
                 fetch (fetchitAPIUrl, {method: 'POST',
                     headers: {'Content-Type': 'application/json'},
