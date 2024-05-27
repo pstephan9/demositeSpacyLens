@@ -10,25 +10,27 @@
     <title>Acme widgets</title>
     <style>
       html {
+        border: 0px solid hotpink;
         font-family: "Kumbh Sans";
         background-color: white ; /* rgba(42, 38, 33, 0.54); */
         display: flex; flex-direction: column; align-items: center;
         }
       .deviceFrame {
-        width: 337px;
         border-radius: 4px;
         display: flex; flex-direction: column; align-items: center;
         }
       .carousel {
-        width: 300px;
+        width: 220px;
+        height: 220px;
         box-sizing: border-box;
         overflow: hidden; margin: 0px 4px 0px 4px !important; border-radius: 6px; 
         }
       .carousel-cell {
-        width: 320px;
+        width: 220px;
         border-radius: 4px;
         }
-      .flickity-button { margin-top: 90px}
+      .flickity-button { margin-top: 80px}
+      .flickity-prev-next-button { width: 36px !important; height: 36px !important;}
       .demoSiteHeadline {
         color: rgb(175, 93, 13);
         height: 50px;
@@ -39,7 +41,7 @@
         position: relative;
         }
       .demoSiteLegend {
-        width: 100%; font-size: 30px;
+        width: 100%; font-size: 24px;
         display: flex; align-items: center; justify-content: space-around;
         padding: 16px;
         margin: 16px;
@@ -78,7 +80,7 @@
         const flkty = new Flickity( '.carousel', {wrapAround: true})
         flkty.on( 'change', cleanit )
         flkty.on( 'settle', i => updateLegend() )
-        const legends = ['Take your pick', 'Separate each object', 'Unlock', 'Jump to product']
+        const legends = ['Take your pick', 'Find the winner', 'Unlock a quote', 'Jump to product']
         const legendEl = document.getElementsByClassName ('demoSiteLegend')[0]
         let legend = legends[0]
         function updateLegend (forced) {
